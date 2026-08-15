@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orion Frameworks | Creative, Video & Marketing Studio</title>
+<meta name="description" content="Orion Frameworks — Video Editing, Motion Graphics, Content Creation, Social Media, PR & Influencer Marketing. We Edit. We Market. You Grow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ============================================================
+   THEME TOKENS
+   ============================================================ */
+[data-theme="dark"]{
+  --bg:#06060e;
+  --bg-alt:#0b0b18;
+  --bg-card:#0f0f1c;
+  --bg-card2:#13131f;
+  --border:rgba(139,111,240,.18);
+  --border-subtle:rgba(255,255,255,.06);
+  --text:#f0f0ff;
+  --text-dim:#8888aa;
+  --text-muted:#55556a;
+  --violet:#9b79ff;
+  --violet-light:#c4adff;
+  --violet-dark:#5a3fd0;
+  --violet-glow:rgba(155,121,255,.45);
+  --accent:#ff6ef7;
+  --accent2:#00e5ff;
+  --silver:#d0d0e8;
+  --noise-opacity:.03;
+  --grid-color:rgba(139,111,240,.12);
+  --hero-text:linear-gradient(135deg,#fff 0%,#c4adff 40%,#9b79ff 70%,#fff 100%);
+  --card-shine:rgba(255,255,255,.04);
+  --shadow-violet:0 30px 80px -20px rgba(155,121,255,.5);
+}
+[data-theme="light"]{
+  --bg:#f5f3ff;
+  --bg-alt:#ede9ff;
+  --bg-card:#ffffff;
+  --bg-card2:#f9f7ff;
+  --border:rgba(139,111,240,.25);
+  --border-subtle:rgba(139,111,240,.12);
+  --text:#1a1030;
+  --text-dim:#5a5070;
+  --text-muted:#9090b0;
+  --violet:#7c5ce8;
+  --violet-light:#9b79ff;
+  --violet-dark:#4a2db8;
+  --violet-glow:rgba(124,92,232,.3);
+  --accent:#d000c8;
+  --accent2:#0090bb;
+  --silver:#4040608;
+  --noise-opacity:.02;
+  --grid-color:rgba(139,111,240,.08);
+  --hero-text:linear-gradient(135deg,#2d1060 0%,#7c5ce8 45%,#b060f0 75%,#2d1060 100%);
+  --card-shine:rgba(255,255,255,.7);
+  --shadow-violet:0 20px 60px -15px rgba(124,92,232,.3);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;line-height:1.65;
+  transition:background .4s,color .4s;
+}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;letter-spacing:.5px;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+img{max-width:100%;display:block;}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2;}
+section{padding:120px 0;position:relative;}
+
+/* ============================================================
+   NOISE TEXTURE OVERLAY
+   ============================================================ */
+body::before{
+  content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity:var(--noise-opacity);mix-blend-mode:overlay;
+}
+
+/* ============================================================
+   ANIMATED BACKGROUND
+   ============================================================ */
+.bg-scene{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(100px);animation:orbFloat 12s ease-in-out infinite;}
+.bg-orb1{width:700px;height:700px;background:radial-gradient(circle,var(--violet) 0%,transparent 70%);top:-20%;left:-15%;opacity:.2;animation-delay:0s;}
+.bg-orb2{width:500px;height:500px;background:radial-gradient(circle,var(--accent) 0%,transparent 70%);bottom:-10%;right:-10%;opacity:.15;animation-delay:-4s;}
+.bg-orb3{width:400px;height:400px;background:radial-gradient(circle,var(--accent2) 0%,transparent 70%);top:40%;left:40%;opacity:.1;animation-delay:-8s;}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(40px,-30px) scale(1.05);}66%{transform:translate(-20px,40px) scale(.95);}
+}
+.grid-lines{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);
+}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;letter-spacing:4px;text-transform:uppercase;font-weight:700;
+  color:var(--violet-light);margin-bottom:16px;
+  padding:6px 16px;border:1px solid var(--border);border-radius:30px;
+  background:rgba(155,121,255,.08);
+}
+.section-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--violet-light);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.6);}}
+.section-title{
+  font-size:clamp(2rem,4.5vw,3.4rem);font-weight:900;
+  background:var(--hero-text);-webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:18px;line-height:1.1;
+}
+.section-sub{color:var(--text-dim);max-width:600px;font-size:1rem;margin-bottom:56px;line-height:1.75;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.tag-center{display:flex;justify-content:center;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:6px;
+  font-weight:700;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;border:none;transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+}
+.btn::after{
+  content:"";position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  transition:opacity .3s;
+}
+.btn:hover::after{opacity:1;}
+.btn-primary{
+  background:linear-gradient(135deg,var(--violet-light),var(--violet),var(--violet-dark));
+  color:#fff;box-shadow:0 0 30px var(--violet-glow),inset 0 1px 0 rgba(255,255,255,.2);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 50px var(--violet-glow),0 10px 30px rgba(0,0,0,.3);}
+.btn-ghost{
+  background:transparent;color:var(--violet-light);
+  border:1.5px solid var(--violet-light);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.btn-ghost:hover{background:rgba(155,121,255,.1);transform:translateY(-3px);box-shadow:0 0 30px var(--violet-glow);}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+.theme-btn{
+  width:44px;height:44px;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--bg-card);color:var(--violet-light);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;transition:all .3s;flex-shrink:0;
+}
+.theme-btn:hover{border-color:var(--violet-light);box-shadow:0 0 20px var(--violet-glow);}
+[data-theme="dark"] .icon-sun{display:block;}
+[data-theme="dark"] .icon-moon{display:none;}
+[data-theme="light"] .icon-sun{display:none;}
+[data-theme="light"] .icon-moon{display:block;}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  background:rgba(6,6,14,.7);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-subtle);
+  transition:background .4s,border-color .4s;
+}
+[data-theme="light"] header{background:rgba(245,243,255,.8);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1200px;margin:0 auto;gap:20px;}
+.header-logo{height:38px;width:auto;object-fit:contain;}
+[data-theme="light"] .header-logo{filter:brightness(.1) saturate(0);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{
+  font-size:.82rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-dim);position:relative;transition:color .3s;padding:4px 0;
+}
+.nav-links a::after{
+  content:"";position:absolute;bottom:-2px;left:0;width:0;height:1.5px;
+  background:linear-gradient(90deg,var(--violet-light),var(--accent));
+  transition:width .3s;
+}
+.nav-links a:hover{color:var(--violet-light);}
+.nav-links a:hover::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100;padding:4px;}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:all .3s;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding-top:100px;position:relative;overflow:hidden;
+}
+.hero-fx{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.h-orb{
+  position:absolute;border-radius:50%;
+  background:linear-gradient(135deg,var(--violet-light),var(--violet-dark));
+  opacity:.6;box-shadow:0 0 60px var(--violet-glow);
+  transition:transform .15s ease-out;
+}
+.h-orb1{width:80px;height:80px;top:20%;left:8%;animation:floatY 6s ease-in-out infinite;}
+.h-orb2{width:48px;height:48px;top:62%;left:16%;animation:floatY 8s ease-in-out infinite reverse;animation-delay:-2s;}
+.h-orb3{width:100px;height:100px;top:18%;right:7%;animation:floatY 7s ease-in-out infinite;animation-delay:-3s;}
+.h-orb4{width:36px;height:36px;top:72%;right:14%;animation:floatY 9s ease-in-out infinite reverse;}
+.h-orb5{width:22px;height:22px;top:44%;left:5%;animation:floatY 5s ease-in-out infinite;animation-delay:-1s;}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+/* Scan line */
+.hero::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--violet-light),var(--accent),transparent);
+  animation:scanDown 4s ease-in-out infinite;
+  box-shadow:0 0 20px var(--violet-light);
+}
+@keyframes scanDown{0%{top:0;opacity:1;}100%{top:100%;opacity:0;}}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px;
+}
+.hero-eyebrow span{
+  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);
+  border:1px solid var(--border-subtle);padding:5px 12px;border-radius:3px;
+  font-family:'Orbitron',sans-serif;
+}
+.hero h1{
+  font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1.05;
+  background:var(--hero-text);-webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:24px;letter-spacing:-1px;
+  filter:drop-shadow(0 0 40px var(--violet-glow));
+}
+.hero h1 em{font-style:normal;color:var(--accent);-webkit-background-clip:unset;background-clip:unset;background:none;filter:drop-shadow(0 0 20px var(--accent));}
+.hero-sub{color:var(--text-dim);font-size:1.1rem;max-width:560px;margin:0 auto 42px;line-height:1.8;}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+/* Glitch text effect */
+.glitch{position:relative;display:inline-block;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;width:100%;
+  background:var(--hero-text);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.glitch::before{left:2px;text-shadow:-2px 0 var(--accent);animation:glitch1 3s infinite linear alternate-reverse;}
+.glitch::after{left:-2px;text-shadow:2px 0 var(--accent2);animation:glitch2 2s infinite linear alternate-reverse;}
+@keyframes glitch1{0%,90%,100%{clip-path:inset(0 0 100% 0);}10%{clip-path:inset(20% 0 60% 0);}30%{clip-path:inset(70% 0 10% 0);}50%{clip-path:inset(40% 0 40% 0);}70%{clip-path:inset(5% 0 80% 0);}}
+@keyframes glitch2{0%,90%,100%{clip-path:inset(0 0 100% 0);}20%{clip-path:inset(60% 0 20% 0);}40%{clip-path:inset(10% 0 70% 0);}60%{clip-path:inset(80% 0 5% 0);}80%{clip-path:inset(35% 0 45% 0);}}
+.stats-strip{
+  margin-top:80px;display:flex;gap:0;justify-content:center;flex-wrap:wrap;
+  border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  background:var(--bg-card);backdrop-filter:blur(10px);
+}
+.stat-item{
+  flex:1;min-width:140px;padding:24px 20px;text-align:center;
+  border-right:1px solid var(--border);position:relative;
+}
+.stat-item:last-child{border-right:none;}
+.stat-item::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--violet-light),transparent);
+  opacity:0;transition:.3s;
+}
+.stat-item:hover::before{opacity:1;}
+.stat-num{
+  font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;
+  background:linear-gradient(135deg,var(--violet-light),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  line-height:1;margin-bottom:6px;
+}
+.stat-label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.about-badge{
+  display:inline-block;padding:4px 14px;border-radius:3px;
+  background:linear-gradient(135deg,var(--violet),var(--accent));
+  font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;
+  margin-bottom:20px;
+}
+.about-text p{color:var(--text-dim);margin-bottom:18px;font-size:1rem;line-height:1.8;}
+.vm-stack{display:flex;flex-direction:column;gap:18px;}
+.vm-box{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+  padding:28px;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.vm-box::before{
+  content:"";position:absolute;top:0;left:0;width:3px;height:100%;
+  background:linear-gradient(180deg,var(--violet-light),var(--accent));
+}
+.vm-box:hover{border-color:var(--violet);transform:translateX(6px);box-shadow:var(--shadow-violet);}
+.vm-box i{
+  font-size:1.4rem;margin-bottom:12px;display:block;
+  background:linear-gradient(135deg,var(--violet-light),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.vm-box h4{font-size:1rem;color:var(--text);margin-bottom:8px;}
+.vm-box p{color:var(--text-dim);font-size:.9rem;}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+#services{background:var(--bg-alt);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.srv-card{
+  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;
+  padding:32px 26px;position:relative;overflow:hidden;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  transform-style:preserve-3d;
+}
+.srv-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 0%,rgba(155,121,255,.1),transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.srv-card::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--violet-light),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.srv-card:hover::before,.srv-card:hover::after{opacity:1;}
+.srv-card:hover{border-color:var(--border);box-shadow:var(--shadow-violet),0 0 0 1px var(--border) inset;}
+.srv-num{
+  font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;
+  color:var(--border);line-height:1;margin-bottom:16px;
+  background:linear-gradient(135deg,var(--border),transparent);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.srv-icon{
+  width:52px;height:52px;border-radius:10px;margin-bottom:18px;
+  background:linear-gradient(135deg,var(--violet),var(--violet-dark));
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;
+  box-shadow:0 8px 24px var(--violet-glow);
+}
+.srv-card h3{font-size:1rem;color:var(--text);margin-bottom:10px;}
+.srv-card p{color:var(--text-dim);font-size:.88rem;line-height:1.7;}
+.srv-arrow{
+  position:absolute;bottom:24px;right:24px;width:32px;height:32px;border-radius:50%;
+  background:var(--bg-alt);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);font-size:.8rem;transition:all .3s;
+}
+.srv-card:hover .srv-arrow{background:var(--violet);border-color:var(--violet);color:#fff;transform:rotate(45deg);}
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+.process-track{display:flex;gap:0;position:relative;overflow:hidden;border-radius:12px;border:1px solid var(--border);}
+.process-track::before{
+  content:"";position:absolute;top:52px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--violet),var(--accent),var(--violet),transparent);z-index:0;
+}
+.proc-step{
+  flex:1;padding:32px 20px;text-align:center;background:var(--bg-card);
+  border-right:1px solid var(--border);z-index:1;position:relative;
+  transition:background .3s;
+}
+.proc-step:last-child{border-right:none;}
+.proc-step:hover{background:var(--bg-card2);}
+.proc-num{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--violet),var(--violet-dark));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;font-size:.9rem;
+  box-shadow:0 0 24px var(--violet-glow);position:relative;
+}
+.proc-num::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid var(--violet);opacity:.5;animation:ringPulse 2s ease infinite;
+}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.5;}50%{transform:scale(1.2);opacity:0;}}
+.proc-step h4{font-size:.85rem;color:var(--text);margin-bottom:6px;}
+.proc-step p{color:var(--text-muted);font-size:.78rem;}
+/* Platforms */
+.platforms-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:60px;}
+.plat{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  width:80px;padding:16px 10px;border-radius:12px;
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  font-size:1.6rem;color:var(--text-dim);transition:all .3s;cursor:default;
+}
+.plat span{font-size:.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
+.plat:hover{border-color:var(--violet);color:var(--violet-light);transform:translateY(-8px) scale(1.05);box-shadow:0 20px 40px var(--violet-glow);}
+
+/* ============================================================
+   VIDEO / DESIGN PIPELINE
+   ============================================================ */
+#video-design{background:var(--bg-alt);}
+.craft-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+.craft-col h3{
+  font-size:1.1rem;color:var(--text);margin-bottom:26px;padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.pip-step{
+  display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border-subtle);
+  transition:all .3s;cursor:default;
+}
+.pip-step:hover{padding-left:8px;}
+.pip-step:last-child{border-bottom:none;}
+.pip-num{
+  font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.4rem;
+  background:linear-gradient(135deg,var(--violet-light),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  min-width:40px;line-height:1.2;
+}
+.pip-step h4{color:var(--text);font-size:.92rem;margin-bottom:4px;}
+.pip-step p{color:var(--text-dim);font-size:.82rem;}
+.cap-tags{display:flex;flex-wrap:wrap;gap:10px;}
+.cap-tag{
+  padding:8px 16px;border-radius:6px;font-size:.82rem;
+  background:var(--bg-card);border:1px solid var(--border);color:var(--text-dim);
+  transition:all .3s;cursor:default;
+}
+.cap-tag:hover{border-color:var(--violet-light);color:var(--violet-light);background:rgba(155,121,255,.08);transform:translateY(-3px);}
+
+/* ============================================================
+   PR & INFLUENCER
+   ============================================================ */
+.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+.pr-list{display:flex;flex-direction:column;gap:14px;}
+.pr-item{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);
+  transition:all .3s;
+}
+.pr-item:hover{border-color:var(--violet);transform:translateX(6px);}
+.pr-item i{
+  width:36px;height:36px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--accent));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;
+}
+.pr-item span{color:var(--text-dim);font-size:.9rem;}
+.workflow-steps{display:flex;flex-direction:column;gap:12px;}
+.wf-step{
+  display:flex;gap:14px;align-items:center;padding:12px 0;
+  border-bottom:1px solid var(--border-subtle);transition:all .3s;
+}
+.wf-step:hover{padding-left:6px;}
+.wf-num{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:var(--bg-card);border:1.5px solid var(--violet);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--violet-light);font-weight:700;
+}
+.wf-step h4{color:var(--text);font-size:.9rem;}
+
+/* ============================================================
+   CALENDAR
+   ============================================================ */
+#calendar{background:var(--bg-alt);}
+.cal-wrap{
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);
+  box-shadow:var(--shadow-violet);overflow-x:auto;
+}
+table{width:100%;border-collapse:collapse;min-width:540px;}
+thead tr{background:linear-gradient(135deg,var(--violet-dark),var(--violet));}
+th{padding:16px 22px;text-align:left;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:#fff;font-weight:700;}
+tbody tr{background:var(--bg-card);border-top:1px solid var(--border-subtle);transition:background .2s;}
+tbody tr:nth-child(even){background:var(--bg-card2);}
+tbody tr:hover{background:rgba(155,121,255,.07);}
+td{padding:14px 22px;color:var(--text-dim);font-size:.9rem;}
+td:first-child{color:var(--text);font-weight:600;}
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start;}
+.p-card{
+  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;
+  padding:36px 28px;position:relative;transition:all .3s;
+  transform-style:preserve-3d;
+}
+.p-card:hover{border-color:var(--border);box-shadow:var(--shadow-violet);}
+.p-card.hot{
+  background:linear-gradient(160deg,var(--bg-card2),var(--bg-card));
+  border-color:var(--violet);transform:translateY(-8px);
+  box-shadow:var(--shadow-violet),0 0 0 1px var(--border);
+}
+.hot-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--violet-light),var(--accent));
+  color:#0a0a10;font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:6px 18px;border-radius:20px;white-space:nowrap;
+}
+.p-tier{font-family:'Orbitron',sans-serif;letter-spacing:3px;font-size:.8rem;color:var(--violet-light);margin-bottom:12px;}
+.p-amount{
+  font-size:2.2rem;font-weight:900;margin-bottom:6px;
+  background:var(--hero-text);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.p-amount em{font-style:normal;font-size:.9rem;color:var(--text-muted);background:none;-webkit-background-clip:unset;color:var(--text-muted);}
+.p-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:20px 0;}
+.p-card ul{margin-bottom:28px;}
+.p-card ul li{
+  display:flex;gap:10px;align-items:flex-start;padding:9px 0;
+  color:var(--text-dim);font-size:.88rem;border-bottom:1px solid var(--border-subtle);
+}
+.p-card ul li:last-child{border-bottom:none;}
+.p-card ul li i{color:var(--violet-light);margin-top:2px;flex-shrink:0;}
+
+/* ============================================================
+   PORTFOLIO
+   ============================================================ */
+#portfolio{background:var(--bg-alt);}
+.port-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.port-card{
+  border-radius:12px;overflow:hidden;height:300px;position:relative;
+  display:flex;align-items:flex-end;padding:28px;
+  border:1px solid var(--border-subtle);
+  transition:all .3s;transform-style:preserve-3d;cursor:pointer;
+}
+.port-bg{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(135deg,var(--bg-card),var(--bg-alt));
+  transition:transform .5s;
+}
+.port-card:hover .port-bg{transform:scale(1.05);}
+.port-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(6,6,14,.9) 0%,transparent 60%);
+}
+.port-gfx{
+  position:absolute;top:24px;right:24px;z-index:2;
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(155,121,255,.15);backdrop-filter:blur(4px);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;color:rgba(255,255,255,.3);
+  transition:all .3s;
+}
+.port-card:hover .port-gfx{background:var(--violet);border-color:var(--violet);color:#fff;transform:scale(1.1) rotate(10deg);}
+.port-card:hover{border-color:var(--violet);box-shadow:var(--shadow-violet);}
+.port-info{position:relative;z-index:3;}
+.port-cat{
+  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--violet-light);margin-bottom:8px;display:block;
+}
+.port-info h3{color:#fff;font-size:1.1rem;margin-bottom:4px;}
+.port-info p{color:rgba(255,255,255,.5);font-size:.82rem;}
+/* gradient fills per card */
+.port-card:nth-child(1) .port-bg{background:linear-gradient(135deg,#1a0a2e,#0f1a3a);}
+.port-card:nth-child(2) .port-bg{background:linear-gradient(135deg,#0a1a0f,#1a2a0a);}
+.port-card:nth-child(3) .port-bg{background:linear-gradient(135deg,#1a0a10,#2a0a1a);}
+.port-card:nth-child(4) .port-bg{background:linear-gradient(135deg,#0a1020,#0a2020);}
+
+/* ============================================================
+   WHY CHOOSE US
+   ============================================================ */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.why-card{
+  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;
+  padding:28px;text-align:center;transition:all .3s;position:relative;overflow:hidden;
+}
+.why-card::after{
+  content:"";position:absolute;inset:0;opacity:0;transition:.3s;
+  background:radial-gradient(circle at 50% 0%,rgba(155,121,255,.12),transparent 60%);
+}
+.why-card:hover::after{opacity:1;}
+.why-card:hover{border-color:var(--border);transform:translateY(-6px);box-shadow:var(--shadow-violet);}
+.why-icon{
+  width:56px;height:56px;border-radius:50%;margin:0 auto 18px;
+  background:linear-gradient(135deg,var(--violet),var(--violet-dark));
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;
+  box-shadow:0 8px 24px var(--violet-glow);
+}
+.why-card h4{font-size:.95rem;color:var(--text);margin-bottom:8px;}
+.why-card p{color:var(--text-dim);font-size:.85rem;}
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.cta-section{
+  position:relative;overflow:hidden;text-align:center;
+  background:linear-gradient(135deg,var(--bg-card),var(--bg-alt));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.cta-section::before{
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,var(--violet-glow) 0%,transparent 70%);
+  opacity:.5;pointer-events:none;
+}
+.cta-section h2{font-size:clamp(2rem,4.5vw,3.5rem);color:var(--text);position:relative;z-index:1;}
+.cta-section p{color:var(--text-dim);font-size:1.05rem;max-width:500px;margin:16px auto 36px;position:relative;z-index:1;}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;}
+.contact-info-box{
+  display:flex;align-items:flex-start;gap:14px;margin-bottom:22px;
+  padding:18px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);
+  transition:all .3s;
+}
+.contact-info-box:hover{border-color:var(--border);transform:translateX(6px);}
+.cib-icon{
+  width:42px;height:42px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--accent));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;
+}
+.cib-icon i{display:flex;}
+.cib-text h4{color:var(--text);font-size:.88rem;margin-bottom:3px;}
+.cib-text a,.cib-text p{color:var(--text-dim);font-size:.85rem;transition:color .2s;}
+.cib-text a:hover{color:var(--violet-light);}
+/* Form */
+.contact-form{display:flex;flex-direction:column;gap:14px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.f-field{position:relative;}
+.f-field input,.f-field textarea{
+  width:100%;background:var(--bg-card);border:1.5px solid var(--border-subtle);
+  border-radius:8px;padding:14px 16px;
+  color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.9rem;
+  outline:none;transition:all .3s;
+}
+.f-field input:focus,.f-field textarea:focus{
+  border-color:var(--violet);box-shadow:0 0 0 3px rgba(155,121,255,.15);
+}
+.f-field textarea{resize:vertical;min-height:130px;}
+.f-field input::placeholder,.f-field textarea::placeholder{color:var(--text-muted);}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{padding:60px 0 24px;border-top:1px solid var(--border-subtle);background:var(--bg-alt);}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-brand p{color:var(--text-dim);font-size:.88rem;margin-top:14px;max-width:280px;line-height:1.8;}
+.footer-logo{height:40px;width:auto;object-fit:contain;}
+[data-theme="light"] .footer-logo{filter:brightness(.1) saturate(0);}
+.footer-col h5{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:18px;}
+.footer-col ul li{margin-bottom:10px;}
+.footer-col ul li a{color:var(--text-dim);font-size:.88rem;transition:all .3s;}
+.footer-col ul li a:hover{color:var(--violet-light);padding-left:6px;}
+.socials-row{display:flex;gap:10px;margin-top:20px;}
+.soc{
+  width:36px;height:36px;border-radius:8px;background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:.9rem;
+  transition:all .3s;
+}
+.soc:hover{background:var(--violet);border-color:var(--violet);color:#fff;transform:translateY(-4px);}
+.footer-bottom{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  padding-top:24px;border-top:1px solid var(--border-subtle);
+  color:var(--text-muted);font-size:.8rem;
+}
+
+/* ============================================================
+   REVEAL ANIMATION
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.up{transform:translateY(28px);}
+.reveal.left{transform:translateX(-28px);}
+.reveal.right{transform:translateX(28px);}
+.reveal.active{opacity:1;transform:translate(0,0);}
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+.to-top{
+  position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:8px;
+  background:linear-gradient(135deg,var(--violet-light),var(--violet));color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:900;
+  opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 8px 24px var(--violet-glow);
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.to-top.show{opacity:1;pointer-events:auto;}
+.to-top:hover{transform:translateY(-4px) scale(1.05);}
+
+/* ============================================================
+   TILT 3D CARDS
+   ============================================================ */
+.tilt{transform-style:preserve-3d;will-change:transform;transition:transform .12s ease-out,box-shadow .3s;}
+
+/* ============================================================
+   CURSOR GLOW (desktop)
+   ============================================================ */
+.cursor-glow{
+  position:fixed;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(155,121,255,.08) 0%,transparent 70%);
+  pointer-events:none;z-index:1;transform:translate(-50%,-50%);
+  transition:opacity .3s;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--violet);border-radius:3px;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1024px){
+  .about-wrap,.craft-grid,.pr-grid,.contact-wrap{grid-template-columns:1fr;gap:40px;}
+  .services-grid,.why-grid{grid-template-columns:repeat(2,1fr);}
+  .price-grid{grid-template-columns:repeat(2,1fr);}
+  .port-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right .btn-ghost{display:none;}
+  .hamburger{display:flex;}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;top:66px;right:0;width:72%;height:calc(100vh - 66px);
+    background:var(--bg-alt);backdrop-filter:blur(20px);
+    padding:36px 28px;gap:24px;
+    border-left:1px solid var(--border);z-index:999;
+  }
+  .nav-links.open a{font-size:1rem;}
+  .services-grid,.why-grid,.price-grid{grid-template-columns:1fr;}
+  .p-card.hot{transform:none;}
+  .process-track{flex-direction:column;}
+  .proc-step{border-right:none;border-bottom:1px solid var(--border);}
+  .process-track::before{top:0;bottom:0;left:26px;right:auto;width:1px;height:auto;}
+  section{padding:80px 0;}
+  .footer-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .stats-strip{flex-wrap:wrap;}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);}
+  .tilt{transform:none !important;}
+  .cursor-glow{display:none;}
+  .h-orb{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- BACKGROUND SCENE -->
+<div class="bg-scene">
+  <div class="bg-orb bg-orb1"></div>
+  <div class="bg-orb bg-orb2"></div>
+  <div class="bg-orb bg-orb3"></div>
+</div>
+<div class="grid-lines"></div>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="mainHeader">
+  <nav>
+    <a href="#home" class="logo-wrap">
+      <img class="header-logo" src="logo.png" alt="Orion Frameworks">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <i class="fa-solid fa-sun icon-sun"></i>
+        <i class="fa-solid fa-moon icon-moon"></i>
+      </button>
+      <a href="#contact" class="btn btn-ghost" style="padding:10px 22px;font-size:.8rem;">Let's Talk</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-fx">
+    <div class="h-orb h-orb1" data-d="30"></div>
+    <div class="h-orb h-orb2" data-d="15"></div>
+    <div class="h-orb h-orb3" data-d="40"></div>
+    <div class="h-orb h-orb4" data-d="20"></div>
+    <div class="h-orb h-orb5" data-d="10"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-eyebrow">
+      <span>Creative</span><span>Video</span><span>Motion</span><span>Social</span><span>PR</span><span>Design</span>
+    </div>
+    <h1>
+      <span class="glitch" data-text="Ideas.">Ideas.</span><br>
+      Stories. <em>Influence.</em>
+    </h1>
+    <p class="hero-sub">Creative & marketing solutions for brands that want to matter — video editing, motion graphics, content and campaigns crafted with strategy and precision.</p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn btn-primary"><i class="fa-solid fa-play"></i> View Our Work</a>
+      <a href="#contact" class="btn btn-ghost">Start a Project <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="stats-strip reveal">
+      <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">Projects Delivered</div></div>
+      <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">Brands Grown</div></div>
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Core Disciplines</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Strategy-Led</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section id="about">
+  <div class="container about-wrap">
+    <div class="about-text reveal left">
+      <div class="about-badge">About Orion</div>
+      <h2 class="section-title">We Build Brands People Remember.</h2>
+      <p>Orion Frameworks is a full-service creative and marketing studio built for brands that refuse to be ordinary. We operate at the intersection of culture, creativity, and commerce — crafting work that doesn't just communicate, but resonates, moves, and endures.</p>
+      <p>We combine strategy, storytelling, design, content, and culture to turn brands into experiences people want to engage with.</p>
+    </div>
+    <div class="vm-stack reveal right">
+      <div class="vm-box tilt">
+        <i class="fa-solid fa-eye"></i>
+        <h4>Our Vision</h4>
+        <p>To become the creative force behind the next generation of memorable brands.</p>
+      </div>
+      <div class="vm-box tilt">
+        <i class="fa-solid fa-bullseye"></i>
+        <h4>Our Mission</h4>
+        <p>We combine strategy, storytelling, design, content, and culture to turn brands into experiences people want to engage with.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">What We Do</span></div>
+    <h2 class="section-title center reveal">Our Services</h2>
+    <p class="section-sub center reveal">A complete creative ecosystem — every discipline working in concert to build brands that matter.</p>
+    <div class="services-grid">
+      <div class="srv-card tilt reveal"><div class="srv-num">01</div><div class="srv-icon"><i class="fa-solid fa-film"></i></div><h3>Content Creation</h3><p>Strategic, platform-native content that captures attention and drives action.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+      <div class="srv-card tilt reveal"><div class="srv-num">02</div><div class="srv-icon"><i class="fa-solid fa-share-nodes"></i></div><h3>Social Media Management</h3><p>Full-spectrum social presence — strategy to community to analytics.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+      <div class="srv-card tilt reveal"><div class="srv-num">03</div><div class="srv-icon"><i class="fa-solid fa-clapperboard"></i></div><h3>Video Production</h3><p>Cinematic storytelling from concept to final delivery.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+      <div class="srv-card tilt reveal"><div class="srv-num">04</div><div class="srv-icon"><i class="fa-solid fa-bullhorn"></i></div><h3>PR & Influencer Marketing</h3><p>The right story, the right people, the right audience.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+      <div class="srv-card tilt reveal"><div class="srv-num">05</div><div class="srv-icon"><i class="fa-solid fa-swatchbook"></i></div><h3>Graphic Design</h3><p>Visual identity and design systems that make brands unmistakable.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+      <div class="srv-card tilt reveal"><div class="srv-num">06</div><div class="srv-icon"><i class="fa-solid fa-chart-line"></i></div><h3>Marketing Strategy</h3><p>Data-informed, culture-driven strategy that connects creativity to results.</p><div class="srv-arrow"><i class="fa-solid fa-arrow-right"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROCESS ═══════════════════ -->
+<section id="process">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">How We Work</span></div>
+    <h2 class="section-title center reveal">Content Creation Process</h2>
+    <p class="section-sub center reveal">Every piece of content follows a rigorous, insight-led process — nothing leaves our studio without purpose, precision, and impact.</p>
+    <div class="process-track reveal">
+      <div class="proc-step"><div class="proc-num">01</div><h4>Discover</h4><p>Research & insight</p></div>
+      <div class="proc-step"><div class="proc-num">02</div><h4>Strategize</h4><p>Plan & align</p></div>
+      <div class="proc-step"><div class="proc-num">03</div><h4>Create</h4><p>Craft & produce</p></div>
+      <div class="proc-step"><div class="proc-num">04</div><h4>Distribute</h4><p>Publish & amplify</p></div>
+      <div class="proc-step"><div class="proc-num">05</div><h4>Optimize</h4><p>Measure & improve</p></div>
+    </div>
+    <div class="platforms-row">
+      <div class="plat reveal"><i class="fa-brands fa-instagram"></i><span>Instagram</span></div>
+      <div class="plat reveal"><i class="fa-brands fa-facebook"></i><span>Facebook</span></div>
+      <div class="plat reveal"><i class="fa-brands fa-youtube"></i><span>YouTube</span></div>
+      <div class="plat reveal"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></div>
+      <div class="plat reveal"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></div>
+      <div class="plat reveal"><i class="fa-brands fa-x-twitter"></i><span>X / Twitter</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ VIDEO / DESIGN ═══════════════════ -->
+<section id="video-design">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Craft</span></div>
+    <h2 class="section-title center reveal">Video Production & Graphic Design</h2>
+    <p class="section-sub center reveal">From idea to final frame.</p>
+    <div class="craft-grid">
+      <div class="reveal left">
+        <h3>Video Production Pipeline</h3>
+        <div class="pip-step"><span class="pip-num">01</span><div><h4>Concept & Script</h4><p>Story development, scripting, and creative direction.</p></div></div>
+        <div class="pip-step"><span class="pip-num">02</span><div><h4>Storyboard & Pre-Production</h4><p>Visual planning, casting, location scouting, scheduling.</p></div></div>
+        <div class="pip-step"><span class="pip-num">03</span><div><h4>Production</h4><p>Full crew, cinematic capture, direction on set.</p></div></div>
+        <div class="pip-step"><span class="pip-num">04</span><div><h4>Post: Edit, Motion, VFX, Color</h4><p>Editing, motion graphics, VFX, color grading, final delivery.</p></div></div>
+      </div>
+      <div class="reveal right">
+        <h3>Design Capabilities</h3>
+        <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:20px;">Brand Films & Commercials, Social Reels & Product Videos, Campaign & Event Films, Motion Graphics & VFX.</p>
+        <div class="cap-tags">
+          <span class="cap-tag">Brand Identity</span>
+          <span class="cap-tag">Social Media Design</span>
+          <span class="cap-tag">Campaign Design</span>
+          <span class="cap-tag">Packaging</span>
+          <span class="cap-tag">Posters</span>
+          <span class="cap-tag">Presentations</span>
+          <span class="cap-tag">Digital Ads</span>
+          <span class="cap-tag">Print Collateral</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PR & INFLUENCER ═══════════════════ -->
+<section id="pr">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Reach & Reputation</span></div>
+    <h2 class="section-title center reveal">The Right Story. The Right People.</h2>
+    <p class="section-sub center reveal">How we connect brands to culture.</p>
+    <div class="pr-grid">
+      <div class="reveal left">
+        <h3 style="font-size:1rem;color:var(--text);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);">PR & Influencer Services</h3>
+        <div class="pr-list">
+          <div class="pr-item"><i class="fa-solid fa-magnifying-glass"></i><span>Influencer Discovery & Vetting</span></div>
+          <div class="pr-item"><i class="fa-solid fa-file-signature"></i><span>Creator Partnerships & Contracts</span></div>
+          <div class="pr-item"><i class="fa-solid fa-diagram-project"></i><span>Campaign Management</span></div>
+          <div class="pr-item"><i class="fa-solid fa-newspaper"></i><span>PR Outreach & Media Relations</span></div>
+          <div class="pr-item"><i class="fa-solid fa-box-open"></i><span>Product Seeding</span></div>
+          <div class="pr-item"><i class="fa-solid fa-chart-simple"></i><span>Performance Tracking & Reporting</span></div>
+        </div>
+      </div>
+      <div class="reveal right">
+        <h3 style="font-size:1rem;color:var(--text);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);">Marketing Workflow</h3>
+        <div class="workflow-steps">
+          <div class="wf-step"><div class="wf-num">1</div><h4>Discover</h4></div>
+          <div class="wf-step"><div class="wf-num">2</div><h4>Define</h4></div>
+          <div class="wf-step"><div class="wf-num">3</div><h4>Create</h4></div>
+          <div class="wf-step"><div class="wf-num">4</div><h4>Distribute</h4></div>
+          <div class="wf-step"><div class="wf-num">5</div><h4>Measure</h4></div>
+          <div class="wf-step"><div class="wf-num">6</div><h4>Optimize</h4></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CALENDAR ═══════════════════ -->
+<section id="calendar">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Consistency</span></div>
+    <h2 class="section-title center reveal">4-Week Content Rhythm</h2>
+    <div class="cal-wrap reveal">
+      <table>
+        <thead><tr><th>Day</th><th>Content Type</th><th>Format</th></tr></thead>
+        <tbody>
+          <tr><td>Monday</td><td>Educational</td><td>Carousel / Static</td></tr>
+          <tr><td>Tuesday</td><td>Product / Service</td><td>Reel / Static</td></tr>
+          <tr><td>Wednesday</td><td>Engagement</td><td>Stories / Poll</td></tr>
+          <tr><td>Thursday</td><td>Behind the Scenes</td><td>Reel / Stories</td></tr>
+          <tr><td>Friday</td><td>Trend / Reel</td><td>Short-form Video</td></tr>
+          <tr><td>Saturday</td><td>Community / Lifestyle</td><td>Carousel / Static</td></tr>
+          <tr><td>Sunday</td><td>Brand Story</td><td>Campaign / Influencer</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRICING ═══════════════════ -->
+<section id="pricing">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Pricing</span></div>
+    <h2 class="section-title center reveal">Simple Plans. Real Growth.</h2>
+    <p class="section-sub center reveal">Formats include Reels, Static Posts, Carousels, Stories, Campaign Content, and Influencer Content.</p>
+    <div class="price-grid">
+      <div class="p-card tilt reveal">
+        <div class="p-tier">STARTER</div>
+        <div class="p-amount">₹ XX,XXX <em>/ month</em></div>
+        <div class="p-divider"></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Social media management</li>
+          <li><i class="fa-solid fa-check"></i> Basic content strategy</li>
+          <li><i class="fa-solid fa-check"></i> Monthly content calendar</li>
+          <li><i class="fa-solid fa-check"></i> Basic graphic design</li>
+          <li><i class="fa-solid fa-check"></i> Monthly reporting</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+      <div class="p-card hot tilt reveal">
+        <span class="hot-badge">Most Popular</span>
+        <div class="p-tier">GROWTH</div>
+        <div class="p-amount">₹ XX,XXX <em>/ month</em></div>
+        <div class="p-divider"></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Complete social media management</li>
+          <li><i class="fa-solid fa-check"></i> Advanced content strategy</li>
+          <li><i class="fa-solid fa-check"></i> Video production</li>
+          <li><i class="fa-solid fa-check"></i> Graphic design</li>
+          <li><i class="fa-solid fa-check"></i> Influencer campaigns</li>
+          <li><i class="fa-solid fa-check"></i> Monthly analytics</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+      <div class="p-card tilt reveal">
+        <div class="p-tier">SCALE</div>
+        <div class="p-amount">₹ XX,XXX <em>/ month</em></div>
+        <div class="p-divider"></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Full creative strategy</li>
+          <li><i class="fa-solid fa-check"></i> Premium video production</li>
+          <li><i class="fa-solid fa-check"></i> Social media management</li>
+          <li><i class="fa-solid fa-check"></i> Influencer marketing & PR</li>
+          <li><i class="fa-solid fa-check"></i> Campaign development</li>
+          <li><i class="fa-solid fa-check"></i> Dedicated creative support</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PORTFOLIO ═══════════════════ -->
+<section id="portfolio">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Selected Work</span></div>
+    <h2 class="section-title center reveal">More Than a Studio. A Creative Partner.</h2>
+    <p class="section-sub center reveal">Our portfolio spans campaigns, brand films, social media, graphic design, product content, and influencer campaigns.</p>
+    <div class="port-grid">
+      <div class="port-card tilt reveal"><div class="port-bg"></div><div class="port-overlay"></div><div class="port-gfx"><i class="fa-solid fa-bullseye"></i></div><div class="port-info"><span class="port-cat">Strategy · Content · Social</span><h3>Brand Campaign</h3><p>Client Campaign — Strategy, Content, Social</p></div></div>
+      <div class="port-card tilt reveal"><div class="port-bg"></div><div class="port-overlay"></div><div class="port-gfx"><i class="fa-solid fa-camera"></i></div><div class="port-info"><span class="port-cat">Video · Photography · Design</span><h3>Product Content</h3><p>Client Product Launch — Full Shoot & Edit</p></div></div>
+      <div class="port-card tilt reveal"><div class="port-bg"></div><div class="port-overlay"></div><div class="port-gfx"><i class="fa-solid fa-clapperboard"></i></div><div class="port-info"><span class="port-cat">Video Production · Motion Graphics</span><h3>Brand Film</h3><p>Client Brand Film — Cinematic Storytelling</p></div></div>
+      <div class="port-card tilt reveal"><div class="port-bg"></div><div class="port-overlay"></div><div class="port-gfx"><i class="fa-solid fa-users"></i></div><div class="port-info"><span class="port-cat">PR · Creator Partnerships</span><h3>Influencer Campaign</h3><p>Client Campaign — Creator-Led Reach</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ WHY CHOOSE US ═══════════════════ -->
+<section id="why" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="tag-center reveal"><span class="section-tag">Why Orion</span></div>
+    <h2 class="section-title center reveal">Why Choose Us</h2>
+    <div class="why-grid">
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-compass"></i></div><h4>Strategy First</h4><p>Every creative decision is rooted in insight.</p></div>
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-lightbulb"></i></div><h4>Creative Thinking</h4><p>Bold ideas that break through the noise.</p></div>
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-chart-pie"></i></div><h4>Data + Creativity</h4><p>Numbers inform the work. Craft elevates it.</p></div>
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-fire"></i></div><h4>Culture Driven</h4><p>We create work that lives inside culture, not outside it.</p></div>
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-layer-group"></i></div><h4>End-to-End</h4><p>One partner. Every discipline. Zero gaps.</p></div>
+      <div class="why-card tilt reveal"><div class="why-icon"><i class="fa-solid fa-handshake"></i></div><h4>Long-Term Partnership</h4><p>We grow with you, not just for you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section class="cta-section">
+  <div class="container reveal">
+    <span class="section-tag" style="margin-bottom:22px;">Ready When You Are</span>
+    <h2 class="section-title">Let's Build Something<br>People Remember.</h2>
+    <p>We Edit. We Market. You Grow.</p>
+    <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Start Your Project</a>
+  </div>
+</section>
+
+<!-- ═══════════════════ CONTACT ═══════════════════ -->
+<section id="contact">
+  <div class="container contact-wrap">
+    <div class="reveal left">
+      <div class="tag-center" style="justify-content:flex-start;margin-bottom:16px;"><span class="section-tag">Get In Touch</span></div>
+      <h2 class="section-title">Let's Talk About<br>Your Brand.</h2>
+      <p style="color:var(--text-dim);margin-bottom:32px;font-size:.95rem;">We edit. We market. You grow. Reach out and let's start the conversation.</p>
+      <div class="contact-info-box"><div class="cib-icon"><i class="fa-solid fa-envelope"></i></div><div class="cib-text"><h4>Email</h4><a href="mailto:orionframeworks@gmail.com">orionframeworks@gmail.com</a></div></div>
+      <div class="contact-info-box"><div class="cib-icon"><i class="fa-solid fa-phone"></i></div><div class="cib-text"><h4>Phone</h4><a href="tel:+919205711609">+91 92057 11609</a></div></div>
+      <div class="contact-info-box"><div class="cib-icon"><i class="fa-brands fa-instagram"></i></div><div class="cib-text"><h4>Instagram</h4><a href="https://www.instagram.com/orionframeworks/" target="_blank" rel="noopener">@orionframeworks</a></div></div>
+      <div class="contact-info-box"><div class="cib-icon"><i class="fa-brands fa-linkedin"></i></div><div class="cib-text"><h4>LinkedIn</h4><a href="#">linkedin.com/company/orionframeworks</a></div></div>
+    </div>
+    <form class="contact-form reveal right" onsubmit="handleForm(event)">
+      <div class="form-row">
+        <div class="f-field"><input type="text" placeholder="Your Name" required></div>
+        <div class="f-field"><input type="email" placeholder="Your Email" required></div>
+      </div>
+      <div class="f-field"><input type="text" placeholder="Subject"></div>
+      <div class="f-field"><textarea placeholder="Tell us about your project..."></textarea></div>
+      <button type="submit" class="btn btn-primary">Send Message <i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="logo.png" alt="Orion Frameworks">
+        <p>We Edit. We Market. You Grow. — A full-service creative and marketing studio built for brands that refuse to be ordinary.</p>
+        <div class="socials-row">
+          <a class="soc" href="https://www.instagram.com/orionframeworks/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a class="soc" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a class="soc" href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a class="soc" href="#" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Content Creation</a></li>
+          <li><a href="#services">Video Production</a></li>
+          <li><a href="#services">Graphic Design</a></li>
+          <li><a href="#pr">PR & Influencer</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Orion Frameworks. All Rights Reserved.</span>
+      <span>Creative · Content · Social · Video · PR · Influence · Design</span>
+    </div>
+  </div>
+</footer>
+
+<div class="to-top" id="toTop"><i class="fa-solid fa-arrow-up"></i></div>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+/* ── Theme Toggle ── */
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeBtn');
+const saved = localStorage.getItem('orion-theme') || 'dark';
+html.setAttribute('data-theme', saved);
+themeBtn.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('orion-theme', next);
+});
+
+/* ── Mobile Nav ── */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+}, { threshold: 0.12 });
+reveals.forEach(el => revealObs.observe(el));
+
+/* ── Back to Top ── */
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 500));
+toTop.addEventListener('click', () => scrollTo({top:0,behavior:'smooth'}));
+
+/* ── Header Scroll Shadow ── */
+const hdr = document.getElementById('mainHeader');
+window.addEventListener('scroll', () => {
+  hdr.style.boxShadow = scrollY > 20 ? '0 4px 30px rgba(0,0,0,.3)' : 'none';
+});
+
+/* ── 3D Tilt ── */
+const isTouch = matchMedia('(hover:none)').matches;
+if(!isTouch){
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top)/r.height - .5) * -10;
+      const ry = ((e.clientX - r.left)/r.width - .5) * 10;
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(12px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+  });
+}
+
+/* ── Hero Orbs Parallax ── */
+if(!isTouch){
+  const hero = document.querySelector('.hero');
+  const orbs = document.querySelectorAll('.h-orb');
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - .5;
+    const y = (e.clientY - r.top)/r.height - .5;
+    orbs.forEach(o => {
+      const d = parseFloat(o.dataset.d)||20;
+      o.style.transform = `translate(${x*d}px,${y*d}px)`;
+    });
+  });
+}
+
+/* ── Cursor Glow ── */
+const cg = document.getElementById('cursorGlow');
+if(!isTouch){
+  document.addEventListener('mousemove', e => {
+    cg.style.left = e.clientX+'px';
+    cg.style.top  = e.clientY+'px';
+  });
+}
+
+/* ── Form ── */
+function handleForm(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-check"></i> Message Sent!';
+  btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; e.target.reset(); }, 3000);
+}
+
+/* ── Number Counter Animation ── */
+function animCount(el, target){
+  let start = 0;
+  const dur = 1800, step = 20;
+  const timer = setInterval(() => {
+    start += Math.ceil(target/(dur/step));
+    if(start >= target){ el.textContent = target + (el.dataset.suffix||''); clearInterval(timer); }
+    else el.textContent = start + (el.dataset.suffix||'');
+  }, step);
+}
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const nums = e.target.querySelectorAll('.stat-num');
+      nums.forEach(n => {
+        const raw = n.textContent.replace(/[^0-9]/g,'');
+        const suffix = n.textContent.replace(/[0-9]/g,'').trim();
+        n.dataset.suffix = suffix;
+        animCount(n, parseInt(raw));
+      });
+      countObs.unobserve(e.target);
+    }
+  });
+}, { threshold: .5 });
+const strip = document.querySelector('.stats-strip');
+if(strip) countObs.observe(strip);
+</script>
+</body>
+</html>
